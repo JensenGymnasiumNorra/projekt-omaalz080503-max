@@ -1,0 +1,47 @@
+import random
+
+kort = ["2","3","4","5","6","7","8","9","10","J","Q","K"]
+färger = ["♠", "♥", "♦", "♣"]
+
+def handvalue(hand):
+    varde = 0
+    ace = 0
+    for kort in hand:
+        if kort in ["j","q","k"]:
+            varde += 10
+        elif kort == "a":
+            varde += 11
+            ace += 1
+        else:
+            varde += int(kort)
+    
+    return varde
+
+kortlek = []
+for varde in kort:
+    for farg in färger:
+        kortlek.append(varde + farg)
+random.shuffle(kortlek)
+
+dealer = [kortlek.pop(),]
+spelare = [kortlek.pop(), kortlek.pop()]
+
+print(f"dealerns visade kort är {dealer} och dina kort är {spelare}")
+while true:
+    val = int(input("1. hit , 2. stand"))
+    if val == "1":
+        spelare.append(kortlek.pop())
+    elif varde == 21:
+        break
+    elif kortlek.varde>21:
+        print("Du har gått över poängränsen, du har förlorat")
+        break
+    else:
+        break
+    
+dealer.append(kortlek.pop())
+while true:
+    if dealer.varde<17:
+        dealer.append(kortlek.pop())
+    
+

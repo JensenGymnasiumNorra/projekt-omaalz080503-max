@@ -1,0 +1,7 @@
+jag vill göra ett fungerande blackjack spel där en spelare möter en dealer med klassiska
+regler. programmet ska kunna hantera poängberäkningar, spelarens val som hit och stand, 
+logik som ska kunna bestämma vem som vinner korrekt
+programmet ska vara tydligt, lättförståligt och enkelt att navigera och använda för användaren
+jag har valt att använda listor för att representera både kortlek och spelare/dealerns händer
+anledningen är att listor gör det möjligt att slumpmässigt välja kort 
+och ta bort kort som redan dragits så att samma kort inte används flera gånger
