@@ -4,4 +4,7 @@ logik som ska kunna bestämma vem som vinner korrekt
 programmet ska vara tydligt, lättförståligt och enkelt att navigera och använda för användaren
 jag har valt att använda listor för att representera både kortlek och spelare/dealerns händer
 anledningen är att listor gör det möjligt att slumpmässigt välja kort 
-och ta bort kort som redan dragits så att samma kort inte används flera gånger
+och ta bort kort som redan dragits så att samma kort inte används flera gånger. Jag ska
+också kunna använda pengar som bett och ifall pengarna tar slut så ska spelet avbrytas och
+ifall man vinner ska saldot åka uppåt. Spelomgångarna sker i while loopar så att speletr
+fortsätte rtills nått vilkor gör att nån vinner, förlorar så att det breakas.
