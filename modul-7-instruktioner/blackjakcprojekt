@@ -1,47 +1,137 @@
 import random
 
-kort = ["2","3","4","5","6","7","8","9","10","J","Q","K"]
-färger = ["♠", "♥", "♦", "♣"]
 
-def handvalue(hand):
-    varde = 0
-    ace = 0
-    for kort in hand:
-        if kort in ["j","q","k"]:
-            varde += 10
-        elif kort == "a":
-            varde += 11
-            ace += 1
-        else:
-            varde += int(kort)
-    
-    return varde
+farger = ["♠", "♥", "♦", "♣"]
+varden = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 
-kortlek = []
-for varde in kort:
-    for farg in färger:
-        kortlek.append(varde + farg)
+kortlek = [(varde, farg) for varde in varden for farg in farger]
 random.shuffle(kortlek)
 
-dealer = [kortlek.pop(),]
-spelare = [kortlek.pop(), kortlek.pop()]
 
-print(f"dealerns visade kort är {dealer} och dina kort är {spelare}")
-while true:
-    val = int(input("1. hit , 2. stand"))
-    if val == "1":
-        spelare.append(kortlek.pop())
-    elif varde == 21:
-        break
-    elif kortlek.varde>21:
-        print("Du har gått över poängränsen, du har förlorat")
-        break
-    else:
-        break
-    
-dealer.append(kortlek.pop())
-while true:
-    if dealer.varde<17:
-        dealer.append(kortlek.pop())
-    
+def rakna_poang(hand):
 
+    poang = 0
+    ess = 0
+
+    for kort in hand:
+
+        varde = kort[0]
+
+        if varde in ["J", "Q", "K"]:
+            poang += 10
+
+        elif varde == "A":
+            poang += 11
+            ess += 1
+
+        else:
+            poang += int(varde)
+
+    while poang > 21 and ess > 0:
+        poang -= 10
+        ess -= 1
+
+    return poang
+
+
+pengar = 100
+
+print("===== BLACKJACK =====")
+
+while pengar > 0:
+
+    print("\nDu har", pengar, "kr")
+
+    insats = int(input("Insats: "))
+
+    if insats > pengar:
+        print("Du har inte tillräckligt med pengar.")
+        continue
+
+    pengar -= insats
+
+    
+    spelare = [kortlek.pop(), kortlek.pop()]
+    dealer = [kortlek.pop(), kortlek.pop()]
+
+    print("\nDina kort:", spelare)
+    print("Poäng:", rakna_poang(spelare))
+
+    print("\nDealerns kort:", dealer[0], "?")
+
+    
+    while True:
+
+        if rakna_poang(spelare) >= 21:
+            break
+
+        print("\n1. Ta kort   2. Stanna")
+
+        val = input("Välj: ")
+
+        if val == "1":
+
+            nytt_kort = kortlek.pop()
+            spelare.append(nytt_kort)
+
+            print("\nDu fick:", nytt_kort)
+
+            print("Din hand:", spelare)
+            print("Poäng:", rakna_poang(spelare))
+
+            if rakna_poang(spelare) > 21:
+
+                print("\nDu fick över 21.")
+                print("Du förlorade.")
+
+                break
+
+        elif val == "2":
+            break
+
+        else:
+            print("Fel val.")
+
+    
+    if rakna_poang(spelare) <= 21:
+
+        while rakna_poang(dealer) < 17:
+            dealer.append(kortlek.pop())
+
+        print("\nDealerns hand:", dealer)
+        print("Dealerns poäng:", rakna_poang(dealer))
+
+        spelar_poang = rakna_poang(spelare)
+        dealer_poang = rakna_poang(dealer)
+
+        
+        if dealer_poang > 21:
+
+            print("\nDealern fick över 21.")
+            print("Du vann!")
+
+            pengar += insats * 2
+
+        elif spelar_poang > dealer_poang:
+
+            print("\nDu vann!")
+
+            pengar += insats * 2
+
+        elif spelar_poang == dealer_poang:
+
+            print("\nOavgjort.")
+
+            pengar += insats
+
+        else:
+            print("\nDealern vann.")
+
+    
+    if len(kortlek) < 15:
+
+        kortlek = [(varde, farg) for varde in varden for farg in farger]
+        random.shuffle(kortlek)
+
+print("\nDu har inga pengar kvar.")
+print("Spelet är slut.")
